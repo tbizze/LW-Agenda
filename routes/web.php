@@ -1,5 +1,9 @@
 <?php
 
+use App\Livewire\Admin\PermissionIndex;
+use App\Livewire\Admin\RoleHasPermissionsEdit;
+use App\Livewire\Admin\RoleIndex;
+use App\Livewire\Admin\UserHasRolesIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,10 +31,10 @@ Route::middleware([
     })->name('dashboard');
 
     // Rotas p/ administrator permissões.
-    /* Route::group(['middleware' => ['role:Admin']], function () { 
+    Route::group(['middleware' => ['role:Admin']], function () { 
         Route::get('/admin/roles', RoleIndex::class)->name('admin.roles');
         Route::get('/admin/permissions', PermissionIndex::class)->name('admin.permissions');
-        Route::get('/admin/user-to-roles', UserToRoleIndex::class)->name('admin.user-to-roles');
-        Route::get('/admin/role-has-permissions/{role}/edit', RoleHasPermissionEdit::class)->name('admin.role-has-permissions');
-    }); */
+        Route::get('/admin/user-has-roles', UserHasRolesIndex::class)->name('admin.user-has-roles');
+        Route::get('/admin/role-has-permissions/{role}/edit', RoleHasPermissionsEdit::class)->name('admin.role-has-permissions');
+    });
 });
