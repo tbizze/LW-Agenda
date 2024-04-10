@@ -22,8 +22,13 @@ class DatabaseSeeder extends Seeder
         // Roda um conjunto de Seeder.
         $this->call([
 
-            PermissionSeeder::class,
-            UserSeeder::class,
+            //PermissionSeeder::class,
+            //UserSeeder::class,
+
+            //EventoAreaSeeder::class,
+            //EventoGrupoSeeder::class,
+            //EventoLocalSeeder::class,
+            EventoSeeder::class,
 
         ]);
     }
