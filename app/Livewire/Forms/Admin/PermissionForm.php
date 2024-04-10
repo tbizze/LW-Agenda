@@ -40,6 +40,7 @@ class PermissionForm extends Form
     // Método p/ persistir no BD.
     public function store()
     {
+        
         // Cria um model com os dados aprovados nas validações...
         // Persiste o model atualizado no DB.
         $this->validate();
@@ -53,7 +54,7 @@ class PermissionForm extends Form
 
         // Atribui as funções passadas, à permissão criada.
         if ($this->permission_to_roles) {
-
+            
             // Método p/ converter dados submetidos no form para inteiro. 
             // Está chegando array de strings.
             $role_selected = collect($this->permission_to_roles)->map(function (int $item, int $key) {

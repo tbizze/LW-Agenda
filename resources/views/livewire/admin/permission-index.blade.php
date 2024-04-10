@@ -25,7 +25,7 @@
             @endscope
             @scope('actions', $permission)
             <div class="flex gap-1">
-                @can('movimentos.edit')
+                @can('admin.permissions.edit')
                 <x-mary-button icon="o-document-duplicate" wire:click="copyRecord({{ $permission->id }})" spinner
                     class="btn-sm btn-outline border-none p-1" />
                 @endcan

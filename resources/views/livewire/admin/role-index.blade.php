@@ -17,14 +17,16 @@
         <x-mary-table :headers="$headers" :rows="$roles" striped @row-click="$wire.edit($event.detail.id)"
             with-pagination :sort-by="$sortBy">
             @scope('actions', $roles)
-                @can('admin.roles.delete')
-                    <div class="flex gap-1">
-                        <x-mary-button icon="o-shield-exclamation" :link="route('admin.role-has-permissions',$roles->id)" wire:navigate spinner
+                <div class="flex gap-1">
+                    @can('admin.roles.edit')
+                        <x-mary-button icon="o-shield-exclamation" :link="route('admin.role-has-permissions', $roles->id)" wire:navigate spinner
                             class="btn-sm btn-outline border-none p-1" />
+                    @endcan
+                    @can('admin.roles.delete')
                         <x-mary-button icon="o-trash" wire:click="confirmDelete({{ $roles->id }})" spinner
                             class="btn-sm btn-outline border-none text-error p-1" />
-                    </div>
-                @endcan
+                    @endcan
+                </div>
             @endscope
         </x-mary-table>
     </x-mary-card>

@@ -79,21 +79,18 @@
                         <x-mary-menu-item title="Evento locais" icon="m-arrow-small-right" :link="route('evento.locals')" wire:navigate.hover /> --}}
                     </x-mary-menu-sub>
     
-                    <x-mary-menu-sub title="Recursos" icon="m-adjustments-horizontal">
-                        {{-- <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura.grupos.index')" wire:navigate.hover />
+                    {{-- <x-mary-menu-sub title="Recursos" icon="m-adjustments-horizontal">
+                        <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura.grupos.index')" wire:navigate.hover />
                         <x-mary-menu-item title="Fatura emissores" icon="m-arrow-small-right" :link="route('fatura.emissoras.index')" wire:navigate.hover />
                         <x-mary-menu-item title="Movimento grupos" icon="m-arrow-small-right" :link="route('movimento.grupos.index')" wire:navigate.hover />
                         <x-mary-menu-item title="Tipos pgtos" icon="m-arrow-small-right" :link="route('admin.pgto_tipos.index')" wire:navigate.hover />
-                        <x-mary-menu-item title="Status" icon="m-arrow-small-right" :link="route('admin.status.index')" wire:navigate.hover /> --}}
-                    </x-mary-menu-sub>
+                        <x-mary-menu-item title="Status" icon="m-arrow-small-right" :link="route('admin.status.index')" wire:navigate.hover />
+                    </x-mary-menu-sub> --}}
     
                     <x-mary-menu-sub title="Configurações" icon="o-cog-6-tooth">
-                        <x-mary-menu-item title="Funções" icon="o-square-3-stack-3d" :link="route('admin.roles')" wire:navigate />
-                        <x-mary-menu-item title="Permissões" icon="o-square-3-stack-3d" :link="route('admin.permissions')" wire:navigate.hover />
-                        <x-mary-menu-item title="Funções por usuário" icon="o-square-3-stack-3d" :link="route('admin.user-has-roles')" wire:navigate.hover />
-                        
-                        <x-mary-menu-item title="Wifi" icon="o-wifi" link="####" />
-                        <x-mary-menu-item title="Archives" icon="o-archive-box" link="####" />
+                        <x-mary-menu-item title="Funções" icon="m-arrow-small-right" :link="route('admin.roles.index')" wire:navigate />
+                        <x-mary-menu-item title="Permissões" icon="m-arrow-small-right" :link="route('admin.permissions.index')" wire:navigate.hover />
+                        <x-mary-menu-item title="Funções por usuário" icon="m-arrow-small-right" :link="route('admin.user-has-roles.index')" wire:navigate.hover />
                     </x-mary-menu-sub>
                 </x-mary-menu>
             </x-slot:sidebar>
