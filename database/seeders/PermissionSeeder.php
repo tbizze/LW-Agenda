@@ -78,23 +78,18 @@ class PermissionSeeder extends Seeder
 
         // Atribuir funções a usuários.
         Permission::create([
-            'name'          => 'admin.users.index',
-            'description'   => 'Ver usuários',
+            'name'          => 'admin.user-has-roles.index',
+            'description'   => 'Ver funções de usuários',
             'model'         => 'SEG: Usuário',
         ])->syncRoles([$role1]);
         Permission::create([
-            'name'          => 'admin.users.edit',
-            'description'   => 'Editar usuários',
+            'name'          => 'admin.user-has-roles.edit',
+            'description'   => 'Editar funções de usuários',
             'model'         => 'SEG: Usuário',
         ])->syncRoles([$role1]);
         Permission::create([
-            'name'          => 'admin.users.delete',
-            'description'   => 'Deletar usuários',
-            'model'         => 'SEG: Usuário',
-        ])->syncRoles([$role1]);
-        Permission::create([
-            'name'          => 'admin.users.ban',
-            'description'   => 'Bloquear usuários',
+            'name'          => 'admin.user-has-roles.ban',
+            'description'   => 'Bloquear/desbloquear usuários',
             'model'         => 'SEG: Usuário',
         ])->syncRoles([$role1]);
     }
