@@ -70,13 +70,13 @@
                 <x-mary-menu activate-by-route>
                     <x-mary-menu-item title="Home" icon="o-home" link="/dashboard" />
                     
-                    {{-- <x-mary-menu-item title="Faturas" icon="o-document-text" :link="route('faturas.index')" wire:navigate.hover />
-                    <x-mary-menu-item title="Movimentos" icon="c-inbox" :link="route('movimentos.index')" wire:navigate.hover /> --}}
+                    {{-- <x-mary-menu-item title="Faturas" icon="o-document-text" :link="route('faturas.index')" wire:navigate.hover /> --}}
+                    <x-mary-menu-item title="Eventos" icon="o-calendar-days" :link="route('eventos.index')" wire:navigate.hover /> 
     
                     <x-mary-menu-sub title="Eventos" icon="m-adjustments-horizontal">
-                        {{-- <x-mary-menu-item title="Evento grupos" icon="m-arrow-small-right" :link="route('evento.grupos')" wire:navigate.hover />
-                        <x-mary-menu-item title="Evento áreas" icon="m-arrow-small-right" :link="route('evento.areas')" wire:navigate.hover />
-                        <x-mary-menu-item title="Evento locais" icon="m-arrow-small-right" :link="route('evento.locals')" wire:navigate.hover /> --}}
+                        <x-mary-menu-item title="Evento grupos" icon="m-arrow-small-right" :link="route('evento.grupos.index')" wire:navigate.hover />
+                        <x-mary-menu-item title="Evento áreas" icon="m-arrow-small-right" :link="route('evento.areas.index')" wire:navigate.hover />
+                        <x-mary-menu-item title="Evento locais" icon="m-arrow-small-right" :link="route('evento.locals.index')" wire:navigate.hover />
                     </x-mary-menu-sub>
     
                     {{-- <x-mary-menu-sub title="Recursos" icon="m-adjustments-horizontal">
