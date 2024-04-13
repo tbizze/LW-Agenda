@@ -4,6 +4,7 @@ namespace App\Livewire\Evento;
 
 use App\Livewire\Forms\Evento\EventoForm;
 use App\Models\Evento;
+use App\Models\EventoArea;
 use App\Models\EventoGrupo;
 use App\Models\EventoLocal;
 use Livewire\Attributes\Title;
@@ -34,26 +35,32 @@ class EventoIndex extends Component
     public $date_end = '';
     public $fil_grupo = '';
     public $fil_local = '';
-    //public $fil_tipo = '';
+    public $fil_mes = '';
+    public $fil_area_ids = '';
 
     /* Renderiza componente */
     #[Title('Eventos')]
     public function render()
     {
-        return view('livewire.evento.evento-index',[
+        return view('livewire.evento.evento-index', [
             'headers' => $this->headers(),
             'eventos' => $this->eventos(),
             'evento_locals' => EventoLocal::orderBy('nome')->get(['id', 'nome as name']),
             'evento_grupos' => EventoGrupo::orderBy('nome')->get(['id', 'nome as name']),
+            'evento_areas' => EventoArea::orderBy('nome')->get(['id', 'nome as name']),
+            'meses' => $this->getMeses(),
         ]);
     }
 
     // Método p/ obter dados da tabela
     public function eventos()
     {
+        //dd($this->fil_area_ids);
+
         return Evento::query()
             ->withAggregate('toGrupo', 'nome')
             ->withAggregate('toLocal', 'nome')
+            ->withAggregate('areas', 'nome')
             ->when($this->search, function ($query, $val) {
                 $query->where('nome', 'like', '%' . $val . '%');
                 $query->orWhere('notas', 'like', '%' . $val . '%');
@@ -67,15 +74,17 @@ class EventoIndex extends Component
                 $query->where('evento_local_id', $val);
                 return $query;
             })
-            ->when($this->date_init, function ($query, $val) {
-                $query->whereBetween('start_date', [$this->date_init, $this->date_end]);
+            ->when($this->fil_mes, function ($query, $val) {
+                $query->whereMonth ('start_date', $val);
                 return $query;
             })
+            /* ->when($this->date_init, function ($query, $val) {
+                $query->whereBetween('start_date', [$this->date_init, $this->date_end]);
+                return $query;
+            }) */
             ->orderBy(...array_values($this->sortBy))
-            ->paginate(10);
+            ->paginate(25);
     }
-
-    //'nome','notas','start_date','end_date','start_time','end_time','evento_grupo_id','evento_local_id'
 
     //* Método p/ Cabeçalho da tabela
     public function headers()
@@ -84,9 +93,11 @@ class EventoIndex extends Component
             ['key' => 'id', 'label' => '#', 'class' => 'bg-base-200 w-1'],
             ['key' => 'start_date', 'label' => 'Data início'],
             ['key' => 'start_time', 'label' => 'Hora início'],
+            ['key' => 'dia_semana', 'label' => 'Semana'],
             ['key' => 'nome', 'label' => 'Nome'],
             ['key' => 'to_grupo_nome', 'label' => 'Grupo'],
             ['key' => 'to_local_nome', 'label' => 'Local'],
+            ['key' => 'areas_nome', 'label' => 'Area'],
             ['key' => 'notas', 'label' => 'Notas', 'sortable' => false],
         ];
     }
@@ -145,6 +156,9 @@ class EventoIndex extends Component
         if ($this->fil_local) {
             $this->qdeFilter++;
         }
+        if ($this->fil_mes) {
+            $this->qdeFilter++;
+        }
         if ($this->date_init) {
             $this->qdeFilter++;
         }
@@ -161,10 +175,69 @@ class EventoIndex extends Component
         $this->search = '';
         $this->fil_grupo = '';
         $this->fil_local = '';
-        //$this->fil_tipo = '';
+        $this->fil_mes = '';
         $this->date_init = '';
         $this->date_end = '';
         $this->showDrawer = false;
         $this->qdeFilter = 0;
+    }
+    public function getMeses()
+    {
+        $meses = [
+            [
+                'id' => 1,
+                'name' => 'Janeiro',
+            ],
+            [
+                'id' => 2,
+                'name' => 'Fevereiro',
+            ],
+            [
+                'id' => 3,
+                'name' => 'Março',
+            ],
+            [
+                'id' => 4,
+                'name' => 'Abril',
+            ],
+            [
+                'id' => 5,
+                'name' => 'Maio',
+            ],
+            [
+                'id' => 6,
+                'name' => 'Junho',
+            ],
+            [
+                'id' => 7,
+                'name' => 'Julho',
+            ],
+            [
+                'id' => 8,
+                'name' => 'Agosto',
+            ],
+            [
+                'id' => 9,
+                'name' => 'Setembro',
+            ],
+            [
+                'id' => 10,
+                'name' => 'Outubro',
+            ],
+            [
+                'id' => 11,
+                'name' => 'Novembro',
+            ],
+            [
+                'id' => 12,
+                'name' => 'Dezembro',
+            ]
+        ];
+        return $meses;
+    }
+
+    public function openCalendar()
+    {
+        $this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes,'local' => $this->fil_local,'grupo' => $this->fil_grupo]);
     }
 }

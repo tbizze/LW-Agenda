@@ -5,6 +5,7 @@ use App\Livewire\Admin\RoleHasPermissionsEdit;
 use App\Livewire\Admin\RoleIndex;
 use App\Livewire\Admin\UserHasRolesIndex;
 use App\Livewire\DashboardIndex;
+use App\Livewire\Evento\CalendarIndex;
 use App\Livewire\Evento\EventoAreaIndex;
 use App\Livewire\Evento\EventoGrupoIndex;
 use App\Livewire\Evento\EventoIndex;
@@ -49,4 +50,5 @@ Route::middleware([
     Route::get('/evento/areas', EventoAreaIndex::class)->name('evento.areas.index');
     Route::get('/evento/locals', EventoLocalIndex::class)->name('evento.locals.index');
     Route::get('/eventos', EventoIndex::class)->name('eventos.index');
+    Route::get('/evento/calendar', CalendarIndex::class)->name('evento.calendar');
 });

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,6 +35,52 @@ class Evento extends Model
         'start_time' => 'date:H:i',
         'end_time' => 'date:H:i',
     ];
+
+    /**
+     * Cria uma nova propriedade que é acrescentada às diretas do BD.
+     * É passado em um array os nomes das propriedades desejadas.
+    */
+    protected $appends = [
+        'dia_semana','nome_mes','numero_mes','numero_dia',
+        'start_date_full', 'all_day'
+    ];
+
+    protected function allDay(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => !$this->start_time ? true : false, 
+        );
+    }
+    protected function startDateFull(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Carbon::parse($this->start_date)->format('Y-m-d') . ' ' . Carbon::parse($this->start_time)->format('H:i:s'),  //shortDayName  ou monthName
+        );
+    }
+    protected function diaSemana(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(Carbon::parse($this->start_date)->locale('pt')->shortDayName),  //shortDayName  ou dayName
+        );
+    }
+    protected function nomeMes(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(Carbon::parse($this->start_date)->locale('pt')->shortMonthName),  //shortDayName  ou monthName
+        );
+    }
+    protected function numeroMes(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(Carbon::parse($this->start_date)->month),  //shortDayName  ou monthName
+        );
+    }
+    protected function numeroDia(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(Carbon::parse($this->start_date)->format('d/m')),  //shortDayName  ou monthName
+        );
+    }
 
     /**
      * RELACIONAMENTO: O Evento 'pertence a um' EventoGrupo. 

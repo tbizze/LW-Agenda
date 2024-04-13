@@ -72,6 +72,7 @@
                     
                     {{-- <x-mary-menu-item title="Faturas" icon="o-document-text" :link="route('faturas.index')" wire:navigate.hover /> --}}
                     <x-mary-menu-item title="Eventos" icon="o-calendar-days" :link="route('eventos.index')" wire:navigate.hover /> 
+                    {{-- <x-mary-menu-item title="Calendário" icon="o-calendar-days" :link="route('evento.calendar',['mes' => '3','local' => '1','grupo' => '2'])" />  --}}
     
                     <x-mary-menu-sub title="Eventos" icon="m-adjustments-horizontal">
                         <x-mary-menu-item title="Evento grupos" icon="m-arrow-small-right" :link="route('evento.grupos.index')" wire:navigate.hover />
