@@ -6,6 +6,7 @@
         </x-slot:middle>
         <x-slot:actions>
             <x-mary-button icon="o-calendar-days" wire:click="openCalendar()" class="relative" />                
+            <x-mary-button id="pdf" title="PDF" class="relative" >PDF</x-mary-button>                
             <x-mary-button icon="o-funnel" wire:click="showDrawer = true" class="relative">
                 @if ($qdeFilter > 0)
                     <x-mary-badge :value="$qdeFilter" class="badge-error absolute -right-2 -top-2" />
@@ -24,10 +25,10 @@
             with-pagination :sort-by="$sortBy">
             {{-- Personaliza / formata células  --}}
             @scope('cell_start_date', $evento)
-                {{ $evento->start_date->format('d/m/Y') }}
+                {{ isset($evento->start_date) ? $evento->start_date->format('d/m/Y') : '' }}
             @endscope
             @scope('cell_start_time', $evento)
-                {{ $evento->start_time->format('H:i:s') }}
+                {{ isset($evento->start_time) ? $evento->start_time->format('H:i:s') : ''}}
             @endscope
             @scope('cell_areas_nome', $evento)
                 <div class=" flex gap-1">
@@ -51,17 +52,6 @@
             @endscope
         </x-mary-table>
     </x-mary-card>
-
-    {{-- @foreach ($eventos as $evento)
-        <div class="border pb-3">
-            {{ $evento }}
-            <div class="">
-                @foreach ($evento->areas as $area)
-                    {{ $area->id }}
-                @endforeach
-            </div>
-        </div>
-    @endforeach --}}
 
     {{-- MODAL: Criar/Editar --}}
     <x-mary-modal wire:model="modalRegistro" title="Criar/Editar registro" class="backdrop-blur">
@@ -93,6 +83,13 @@
                         placeholder="Selecione..." />
                 </div>
             </div>
+            <select  wire:model="form.evento_areas_selected" class=" border-primary rounded-lg" multiple>
+                @foreach ($evento_areas as $area)
+                    <option value="{{$area->id}}" class="">{{$area->name}}</option>
+                @endforeach
+            </select>
+
+
             <x-mary-textarea label="Notas" wire:model="form.notas" hint="Max. 100 caracteres" rows="2" />
             <x-slot:actions>
                 <x-mary-button label="Cancel" @click="$wire.modalRegistro = false" />
@@ -113,7 +110,7 @@
             <x-mary-select label="Local" :options="$evento_locals" wire:model="fil_local" placeholder="Selecione..." />
             <x-mary-select label="Mês" :options="$meses" wire:model="fil_mes" placeholder="Selecione..." />
             {{-- public array $users_multi_ids = []; --}}
-            <x-mary-choices label="Areas" wire:model="fil_area_ids" :options="$evento_areas" allow-all />
+            {{-- <x-mary-choices label="Areas" wire:model="fil_area_ids" :options="$evento_areas" allow-all /> --}}
             {{-- <div class="flex justify-between gap-2">
                 <div class="w-1/2">
                     <x-mary-datepicker label="Data início" wire:model="date_init" icon-right="o-calendar"
@@ -124,10 +121,28 @@
                         :config="$date_config" />
                 </div>
             </div> --}}
+            <select  wire:model="fil_area_ids" class=" border-primary rounded-lg" multiple>
+                @foreach ($evento_areas as $area)
+                    <option value="{{$area->id}}" class="">{{$area->name}}</option>
+                @endforeach
+            </select>
             <x-slot:actions>
                 <x-mary-button label="Limpar" @click="$wire.limpaFiltros()" />
                 <x-mary-button label="Filtrar" type="submit" icon="o-check" class="btn-primary" />
             </x-slot:actions>
         </x-mary-form>
     </x-mary-drawer>
+
+    @script
+    <script>
+        document.getElementById('pdf').addEventListener('click', function(){
+            //console.log('TEST');
+            const var_link = "evento/calendar?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local;
+            //console.log(var_link);
+            window.open(var_link, '_blank');
+            //$this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes,'local' => $this->fil_local,'grupo' => $this->fil_grupo]);
+        })
+
+    </script>
+    @endscript
 </div>

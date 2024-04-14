@@ -9,7 +9,7 @@ class CalendarIndex extends Component
 {
     public function render()
     {
-        return view('livewire.evento.calendar-index',[
+        return view('livewire.evento.calendar-index', [
             'events' => $this->eventos(),
         ]);
     }
@@ -18,27 +18,37 @@ class CalendarIndex extends Component
         $events = [];
 
         $data = Evento::query()
-        ->when(request()->mes, function ($query, $val) {
-            $query->whereMonth('start_date', $val);
-            return $query;
-        })
-        ->when(request()->grupo, function ($query, $val) {
-            $query->where('evento_grupo_id', $val);
-            return $query;
-        })
-        ->when(request()->local, function ($query, $val) {
-            $query->where('evento_local_id', $val);
-            return $query;
-        })
-        ->get();
+            ->when(request()->mes, function ($query, $val) {
+                $query->whereMonth('start_date', $val);
+                return $query;
+            })
+            ->when(request()->grupo, function ($query, $val) {
+                $query->where('evento_grupo_id', $val);
+                return $query;
+            })
+            ->when(request()->local, function ($query, $val) {
+                $query->where('evento_local_id', $val);
+                return $query;
+            })
+            ->get();
 
         foreach ($data as $event) {
-            if (isset($event->end_time)) {
-                $end = $event->end_date->format('Y-m-d') . ' ' . $event->end_time->format('H:i:s');
+            // Se 'end_date' é passado
+            /* if (isset($event->end_date)) {
+                // Se 'end_time' é passado, define '$end_date' como junção de 'end_date' + 'end_time'
+                if (isset($event->end_time)) {
+                    $end_date = $event->end_date->format('Y-m-d') . ' ' . $event->end_time->format('H:i:s');
+                
+                // Se 'end_time' é nulo, define '$end_date' como 'end_date' somente.
+                }else{
+                    $end_date = $event->end_date->format('Y-m-d');
+                }
+            // Se 'end_date' é nulo, define '$end_date' como null.
             } else {
-                $end = $event->end_date->format('Y-m-d'); //. ' ' . isset($event->end_time) ? $event->end_time->format('H:i:s') : null;
-            }
+                $end_date = null;
+            } */
 
+            $color_event = '#3480eb';
             foreach ($event->areas as $area) {
                 //dd($event->areas);
                 switch ($area->id) {
@@ -64,15 +74,27 @@ class CalendarIndex extends Component
                 'id' => $event->id,
                 'title' => $event->nome,
                 //'start' => $start,
+                //'end' => $end,
                 'start' => $event->startDateFull,
-                'end' => $end,
+                'end' => $event->endDateFull,
+                //'end_full' => $event->endDateFull,
                 'allDay' => $event->all_day,
                 'color' => $color_event,
-                //'end' => $event->end_time->toIso8601String(),
             ];
         }
+        
+        // Rotina p/ atualizar coluna ALL_DAY
+        /* if (!$event->start_time ) {
+            $event_all_day[] =  $event->id;
+        }
+        foreach ($event_all_day as $item) {
+            $evento = Evento::find($item);
+            $evento->update([
+                'all_day' => true,
+            ]);
+        } */
+        //dd($event_all_day);
+        //dd($events);
         return $events;
     }
-
-    
 }

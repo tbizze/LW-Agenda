@@ -23,7 +23,7 @@ class Evento extends Model
      * Lista des campos em que é permitido a persistência no BD.. 
      */
     protected $fillable = [
-        'nome','notas','start_date','end_date','start_time','end_time','evento_grupo_id','evento_local_id'
+        'nome','notas','start_date','end_date','start_time','end_time','evento_grupo_id','evento_local_id','all_day'
     ];
 
     /**
@@ -34,6 +34,7 @@ class Evento extends Model
         'end_date' => 'date:d/m/Y',
         'start_time' => 'date:H:i',
         'end_time' => 'date:H:i',
+        'all_day' => 'boolean',
     ];
 
     /**
@@ -42,19 +43,39 @@ class Evento extends Model
     */
     protected $appends = [
         'dia_semana','nome_mes','numero_mes','numero_dia',
-        'start_date_full', 'all_day'
+        'start_date_full', 'start_date_full', //'all_day'
     ];
 
-    protected function allDay(): Attribute
+    /* protected function allDay(): Attribute
     {
         return Attribute::make(
             get: fn () => !$this->start_time ? true : false, 
         );
-    }
+    } */
     protected function startDateFull(): Attribute
     {
         return Attribute::make(
             get: fn () => Carbon::parse($this->start_date)->format('Y-m-d') . ' ' . Carbon::parse($this->start_time)->format('H:i:s'),  //shortDayName  ou monthName
+        );
+    }
+    protected function endDateFull(): Attribute
+    {
+        // Se 'end_date' é passado
+        if (isset($this->end_date)) {
+            // Se 'end_time' é passado, define '$end_date' como junção de 'end_date' + 'end_time'
+            if (isset($this->end_time)) {
+                $end_date = $this->end_date->format('Y-m-d') . ' ' . $this->end_time->format('H:i:s');
+            
+            // Se 'end_time' é nulo, define '$end_date' como 'end_date' somente.
+            }else{
+                $end_date = $this->end_date->format('Y-m-d');
+            }
+        // Se 'end_date' é nulo, define '$end_date' como null.
+        } else {
+            $end_date = null;
+        }
+        return Attribute::make(
+            get: fn () => $end_date,  //shortDayName  ou monthName
         );
     }
     protected function diaSemana(): Attribute

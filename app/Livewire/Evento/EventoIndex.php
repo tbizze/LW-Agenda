@@ -47,7 +47,8 @@ class EventoIndex extends Component
             'eventos' => $this->eventos(),
             'evento_locals' => EventoLocal::orderBy('nome')->get(['id', 'nome as name']),
             'evento_grupos' => EventoGrupo::orderBy('nome')->get(['id', 'nome as name']),
-            'evento_areas' => EventoArea::orderBy('nome')->get(['id', 'nome as name']),
+            //'evento_areas' => EventoArea::orderBy('nome')->get(['id', 'nome as name']),
+            'evento_areas' => EventoArea::get(['id', 'nome as name']),
             'meses' => $this->getMeses(),
         ]);
     }
@@ -72,6 +73,12 @@ class EventoIndex extends Component
             })
             ->when($this->fil_local, function ($query, $val) {
                 $query->where('evento_local_id', $val);
+                return $query;
+            })
+            ->when($this->fil_area_ids, function ($query, $val) {
+                $query->whereHas('areas', function($q) use($val){
+                    $q->whereIn('evento_area_id', $val); 
+                 });
                 return $query;
             })
             ->when($this->fil_mes, function ($query, $val) {
@@ -157,6 +164,9 @@ class EventoIndex extends Component
             $this->qdeFilter++;
         }
         if ($this->fil_mes) {
+            $this->qdeFilter++;
+        }
+        if ($this->fil_area_ids) {
             $this->qdeFilter++;
         }
         if ($this->date_init) {

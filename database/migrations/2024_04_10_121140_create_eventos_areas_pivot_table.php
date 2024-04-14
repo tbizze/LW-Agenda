@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('evento_area_id')->references('id')->on('evento_areas');
             // Data de criação e de edição.
             $table->timestamps();
+            // Recurso SoftDelete = excluir p/ lixeira.
+            $table->softDeletes();
         });
     }
 
