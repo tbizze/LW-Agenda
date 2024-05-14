@@ -57,7 +57,7 @@ class EventoGrupoSeeder extends Seeder
                 'notas' => 'Movimento.'
             ],
             [
-                'nome' => 'Apostolado',
+                'nome' => 'Apostolado oração',
                 'notas' => 'Movimento.'
             ],
             [
@@ -74,7 +74,7 @@ class EventoGrupoSeeder extends Seeder
             ],
             [
                 'nome' => 'Música',
-                'notas' => 'Pastoral.'
+                'notas' => 'Ministério.'
             ],
             [
                 'nome' => 'Acolhida',
@@ -91,6 +91,22 @@ class EventoGrupoSeeder extends Seeder
             [
                 'nome' => 'Eventos',
                 'notas' => 'Eventos.'
+            ],
+            [
+                'nome' => 'Padre/Clero',
+                'notas' => 'Eventos.'
+            ],
+            [
+                'nome' => 'Secretaria',
+                'notas' => 'Secretaria.'
+            ],
+            [
+                'nome' => 'Jovens',
+                'notas' => 'Pastoral.'
+            ],
+            [
+                'nome' => 'Pascom',
+                'notas' => 'Pastoral.'
             ],
         ];
 

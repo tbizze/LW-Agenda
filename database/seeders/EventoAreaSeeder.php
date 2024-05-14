@@ -38,6 +38,10 @@ class EventoAreaSeeder extends Seeder
                 'nome' => 'CDP',
                 'notas' => 'Abrangência CDP.'
             ],
+            [
+                'nome' => 'CDP',
+                'notas' => 'Atividade do padre.'
+            ],
         ];
 
         foreach ($items as $item) {
