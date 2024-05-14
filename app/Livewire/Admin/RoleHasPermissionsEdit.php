@@ -22,7 +22,7 @@ class RoleHasPermissionsEdit extends Component
     #[Title('Funções')]
     public function render()
     {
-        return view('livewire.admin.role-has-permissions-edit',[
+        return view('livewire.admin.role-has-permissions-edit', [
             'permissions' => Permission::query()
                 ->selectRaw('id,name,description,model')
                 ->get()
@@ -30,7 +30,8 @@ class RoleHasPermissionsEdit extends Component
         ]);
     }
 
-    public function mount(Role $role){
+    public function mount(Role $role)
+    {
         $this->registro_id = $role->id;
         $this->page_title = $role->name;
         $this->page_subtitle = $role->description;
@@ -42,7 +43,7 @@ class RoleHasPermissionsEdit extends Component
     // Método p/ Cancelar.
     public function cancel()
     {
-        $this->redirectRoute('admin.roles');
+        $this->redirectRoute('admin.roles.index');
     }
 
     // Método p/ salvar: STORE ou UPDATE
@@ -50,9 +51,9 @@ class RoleHasPermissionsEdit extends Component
     {
         // Atribui as funções passadas, à permissão criada.
         if ($this->role_has_permissions) {
-            // Carrega modelo da Função presente.             
+            // Carrega modelo da Função presente.
             $role = Role::find($this->registro_id);
-            // Método p/ converter dados submetidos no form para inteiro. 
+            // Método p/ converter dados submetidos no form para inteiro.
             // Está chegando array de strings.
             $permission_selected = collect($this->role_has_permissions)->map(function (int $item, int $key) {
                 return (int)$item;
