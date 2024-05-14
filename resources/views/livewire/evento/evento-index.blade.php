@@ -6,7 +6,9 @@
         </x-slot:middle>
         <x-slot:actions>
             <x-mary-button icon="o-calendar-days" wire:click="openCalendar()" class="relative" />                
-            <x-mary-button id="pdf" title="PDF" class="relative" >PDF</x-mary-button>                
+            {{-- <x-mary-button id="pdf" title="PDF" class="relative" >PDF</x-mary-button>  --}}               
+            {{-- <x-mary-button id="pdf" title="PDF" :link="route('evento.pdf','mes='.$fil_mes.'&grupo='.$fil_grupo)" class="relative" >Abrir PDF</x-mary-button>  --}}               
+            <x-mary-button id="openPdf" title="PDF" class="relative" >Abrir PDF</x-mary-button>
             <x-mary-button icon="o-funnel" wire:click="showDrawer = true" class="relative">
                 @if ($qdeFilter > 0)
                     <x-mary-badge :value="$qdeFilter" class="badge-error absolute -right-2 -top-2" />
@@ -28,7 +30,7 @@
                 {{ isset($evento->start_date) ? $evento->start_date->format('d/m/Y') : '' }}
             @endscope
             @scope('cell_start_time', $evento)
-                {{ isset($evento->start_time) ? $evento->start_time->format('H:i:s') : ''}}
+                {{ isset($evento->start_time) ? $evento->start_time->format('H:i') : ''}}
             @endscope
             @scope('cell_areas_nome', $evento)
                 <div class=" flex gap-1">
@@ -58,11 +60,15 @@
         <x-mary-form wire:submit="save">
             <x-mary-input label="Nome" wire:model="form.nome" />
             <div class="flex justify-between gap-2">
-                <div class="w-1/2">
+                <div class="w-2/5">
                     <x-mary-datepicker label="Data início" wire:model="form.start_date" :config="$date_config" />
                 </div>
-                <div class="w-1/2">
+                <div class="w-2/5">
                     <x-mary-datetime label="Hora início" wire:model="form.start_time" type="time" />
+                </div>
+                <div class="w-1/5">
+                    <label class="label label-text font-semibold pt-0 mb-3">Dia inteiro</label>
+                    <x-mary-toggle wire:model="form.all_day" />
                 </div>
             </div>
             <div class="flex justify-between gap-2">
@@ -83,12 +89,14 @@
                         placeholder="Selecione..." />
                 </div>
             </div>
+            <div class="flex flex-col">
+            <label for="evento_areas_selected" class="label label-text font-semibold">Áreas</label>
             <select  wire:model="form.evento_areas_selected" class=" border-primary rounded-lg" multiple>
                 @foreach ($evento_areas as $area)
                     <option value="{{$area->id}}" class="">{{$area->name}}</option>
                 @endforeach
             </select>
-
+            </div>
 
             <x-mary-textarea label="Notas" wire:model="form.notas" hint="Max. 100 caracteres" rows="2" />
             <x-slot:actions>
@@ -98,6 +106,16 @@
                 @endcan
             </x-slot:actions>
         </x-mary-form>
+    </x-mary-modal>
+
+    {{-- MODAL: Confirma delete --}}
+    <x-mary-modal wire:model="modalConfirmDelete" title="Deletar registro" class="backdrop-blur">
+        <div class="mb-5">Deseja realmente excluir o <span class=" font-bold">registro nº
+                [{{ $registro_id }}]</span>?</div>
+        <x-slot:actions>
+            <x-mary-button label="Cancel" @click="$wire.modalConfirmDelete = false" />
+            <x-mary-button label="Excluir" wire:click="delete({{ $registro_id }})" class="btn-error" spinner="save" />
+        </x-slot:actions>
     </x-mary-modal>
 
     {{-- Drawer Right -> FILTRAR --}}
@@ -121,11 +139,14 @@
                         :config="$date_config" />
                 </div>
             </div> --}}
-            <select  wire:model="fil_area_ids" class=" border-primary rounded-lg" multiple>
-                @foreach ($evento_areas as $area)
-                    <option value="{{$area->id}}" class="">{{$area->name}}</option>
-                @endforeach
-            </select>
+            <div class="flex flex-col">
+                <label for="fil_area_ids" class="label label-text font-semibold">Áreas</label>
+                <select  wire:model="fil_area_ids" class=" border-primary rounded-lg" multiple>
+                    @foreach ($evento_areas as $area)
+                        <option value="{{$area->id}}" class="">{{$area->name}}</option>
+                    @endforeach
+                </select>
+            </div>
             <x-slot:actions>
                 <x-mary-button label="Limpar" @click="$wire.limpaFiltros()" />
                 <x-mary-button label="Filtrar" type="submit" icon="o-check" class="btn-primary" />
@@ -135,13 +156,19 @@
 
     @script
     <script>
-        document.getElementById('pdf').addEventListener('click', function(){
+        document.getElementById('openPdf').addEventListener('click', function(){
+
+            const var_link = "evento/pdf?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local + "&area_ids=" + $wire.fil_area_ids;
+            console.log(var_link);
+            window.open(var_link, '_blank');
+        })
+        /* document.getElementById('pdf').addEventListener('click', function(){
             //console.log('TEST');
-            const var_link = "evento/calendar?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local;
+            const var_link = "evento/calendar?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local + "&area=" + $wire.fil_area;
             //console.log(var_link);
             window.open(var_link, '_blank');
             //$this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes,'local' => $this->fil_local,'grupo' => $this->fil_grupo]);
-        })
+        }) */
 
     </script>
     @endscript

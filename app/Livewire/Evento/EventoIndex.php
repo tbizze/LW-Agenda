@@ -11,6 +11,8 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 class EventoIndex extends Component
 {
@@ -36,7 +38,7 @@ class EventoIndex extends Component
     public $fil_grupo = '';
     public $fil_local = '';
     public $fil_mes = '';
-    public $fil_area_ids = '';
+    public $fil_area_ids = [];
 
     /* Renderiza componente */
     #[Title('Eventos')]
@@ -76,13 +78,13 @@ class EventoIndex extends Component
                 return $query;
             })
             ->when($this->fil_area_ids, function ($query, $val) {
-                $query->whereHas('areas', function($q) use($val){
-                    $q->whereIn('evento_area_id', $val); 
-                 });
+                $query->whereHas('areas', function ($q) use ($val) {
+                    $q->whereIn('evento_area_id', $val);
+                });
                 return $query;
             })
             ->when($this->fil_mes, function ($query, $val) {
-                $query->whereMonth ('start_date', $val);
+                $query->whereMonth('start_date', $val);
                 return $query;
             })
             /* ->when($this->date_init, function ($query, $val) {
@@ -149,7 +151,15 @@ class EventoIndex extends Component
     // Método para deletar.
     public function delete($id)
     {
-        Evento::find($id)->delete();
+        $evento = Evento::find($id);
+        DB::transaction(function () use ($evento) {
+            // Exclui possíveis registros na tabela pivot relacionada a este usuário.
+            $evento->areas()->detach();
+
+            // Exclui do DB o registro.
+            $evento->delete();
+        });
+
         $this->modalConfirmDelete = false;
         $this->success('Registro excluído com sucesso!');
     }
@@ -248,6 +258,46 @@ class EventoIndex extends Component
 
     public function openCalendar()
     {
-        $this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes,'local' => $this->fil_local,'grupo' => $this->fil_grupo]);
+        $this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes, 'local' => $this->fil_local, 'grupo' => $this->fil_grupo]);
+    }
+    public function openPdf()
+    {
+        $dados = Evento::query()
+            ->withAggregate('toGrupo', 'nome')
+            ->withAggregate('toLocal', 'nome')
+            ->withAggregate('areas', 'nome')
+            ->when($this->search, function ($query, $val) {
+                $query->where('nome', 'like', '%' . $val . '%');
+                $query->orWhere('notas', 'like', '%' . $val . '%');
+                return $query;
+            })
+            ->when($this->fil_grupo, function ($query, $val) {
+                $query->where('evento_grupo_id', $val);
+                return $query;
+            })
+            ->when($this->fil_local, function ($query, $val) {
+                $query->where('evento_local_id', $val);
+                return $query;
+            })
+            ->when($this->fil_area_ids, function ($query, $val) {
+                $query->whereHas('areas', function ($q) use ($val) {
+                    $q->whereIn('evento_area_id', $val);
+                });
+                return $query;
+            })
+            ->when($this->fil_mes, function ($query, $val) {
+                $query->whereMonth('start_date', $val);
+                return $query;
+            })
+            ->get();
+        //dd($dados);
+        $pdf = Pdf::loadView('pdfs.eventos', [
+            'titulo' => 'Eventos',
+            'dados' => $dados,
+            //'filters' => $request,
+        ]);
+
+        //return $pdf->download('recibo.pdf');
+        return $pdf->stream('Eventos.pdf');
     }
 }

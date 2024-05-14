@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Livewire\Admin\PermissionIndex;
 use App\Livewire\Admin\RoleHasPermissionsEdit;
 use App\Livewire\Admin\RoleIndex;
@@ -51,4 +52,18 @@ Route::middleware([
     Route::get('/evento/locals', EventoLocalIndex::class)->name('evento.locals.index');
     Route::get('/eventos', EventoIndex::class)->name('eventos.index');
     Route::get('/evento/calendar', CalendarIndex::class)->name('evento.calendar');
+    Route::get('/evento/pdf', [HomeController::class, 'openEventPdf'])->name('evento.pdf');
+});
+
+
+Route::get('/pdf1', [HomeController::class, 'pdf'])->name('pdf.test');
+Route::get('/pdf2', function(){
+    $data = [
+        [
+            'quantity' => 1,
+            'description' => '1 Year Subscription',
+            'price' => '129.00'
+        ]
+    ];
+    return view('pdfs.exemplo',['data' => $data]);
 });

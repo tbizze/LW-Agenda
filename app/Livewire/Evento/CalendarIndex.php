@@ -3,10 +3,13 @@
 namespace App\Livewire\Evento;
 
 use App\Models\Evento;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class CalendarIndex extends Component
 {
+    /* Renderiza componente */
+    #[Title('Calendário eventos')]
     public function render()
     {
         return view('livewire.evento.calendar-index', [

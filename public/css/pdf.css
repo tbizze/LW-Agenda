@@ -1,0 +1,96 @@
+@page{
+    margin: 0.7cm;
+}
+h4 {
+    margin: 0;
+}
+.w-full {
+    width: 100%;
+}
+.w-half {
+    width: 50%;
+}
+.margin-top {
+    margin-top: 1.25rem;
+}
+.footer {
+    font-size: 0.875rem;
+    padding: 1rem;
+    background-color: rgb(241 245 249);
+}
+table {
+    width: 100%;
+    border-spacing: 0;
+}
+table.header {
+    font-size: 0.875rem;
+}
+table tr.header {
+    background-color:silver;
+}
+table tr.header {
+    color:black;
+    padding: 0.5rem;
+}
+table tr.items {
+    background-color:  #f8f9f9 ;
+}
+table tr.items td {
+    padding: 0.2rem;
+    font-size: 0.7rem;
+    border-bottom: 1px solid gray;
+}
+.border-none{
+    /* border-bottom:none !important; */
+    border-bottom: 1px solid gray !important;
+    /* color:chocolate; */
+}
+.border{
+    border-bottom: 1px solid gray;
+}
+.total {
+    text-align: right;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.date {
+    text-align: left;
+    padding-left: 0.2rem;;
+}
+
+.time {
+    text-align: center;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.group {
+    text-align: center;
+}
+
+.subgroup {
+    text-align: center;
+}
+
+.location {
+    text-align: center;
+}
+
+/* @font-face {
+    font-family: 'Elegance';
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    src: url("http://eclecticgeek.com/dompdf/fonts/Elegance.ttf") format("truetype");
+  } */
+  /* body {
+    font-family: Elegance;
+  } */
+
+  body { 
+    font-family: DejaVu Serif, serif; 
+    font-size: 0.8rem;
+}
