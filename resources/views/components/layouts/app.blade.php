@@ -104,5 +104,8 @@
      
         {{--  TOAST area --}}
         <x-mary-toast />
+
+        {{-- Onde receberá arquivos ou scripts JS dos componentes Blade. --}}
+        @stack('scripts')
     </body>
 </html>
