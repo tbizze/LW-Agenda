@@ -61,6 +61,7 @@ class EventoIndex extends Component
         //dd($this->fil_area_ids);
 
         return Evento::query()
+            ->with('areas')
             ->withAggregate('toGrupo', 'nome')
             ->withAggregate('toLocal', 'nome')
             ->withAggregate('areas', 'nome')
@@ -101,8 +102,8 @@ class EventoIndex extends Component
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'bg-base-200 w-1'],
             ['key' => 'start_date', 'label' => 'Data início'],
-            ['key' => 'start_time', 'label' => 'Hora início'],
             ['key' => 'dia_semana', 'label' => 'Semana'],
+            ['key' => 'start_time', 'label' => 'Hora início'],
             ['key' => 'nome', 'label' => 'Nome'],
             ['key' => 'to_grupo_nome', 'label' => 'Grupo'],
             ['key' => 'to_local_nome', 'label' => 'Local'],
@@ -139,6 +140,17 @@ class EventoIndex extends Component
             $this->success('Registro incluído com sucesso!');
         }
         $this->modalRegistro = false;
+    }
+
+    // Método p/ carregar inputs do form.
+    // Mas não carrega o modelo, para que ao salvar faça STORE()
+    // Por isso registroEditMode = false
+    public function copyRecord($id)
+    {
+        $registro = Evento::find($id);
+        $this->form->setRegistro($registro);
+        $this->registroEditMode = false;
+        $this->modalRegistro = true;
     }
 
     // Método p/ confirmar delete.
