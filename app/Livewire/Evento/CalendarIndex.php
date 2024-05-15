@@ -85,19 +85,28 @@ class CalendarIndex extends Component
                 'color' => $color_event,
             ];
         }
+
         
-        // Rotina p/ atualizar coluna ALL_DAY
-        /* if (!$event->start_time ) {
-            $event_all_day[] =  $event->id;
-        }
-        foreach ($event_all_day as $item) {
-            $evento = Evento::find($item);
-            $evento->update([
+        /**
+         * Rotina p/ atualizar e corrigir coluna ALL_DAY.
+         * Obtêm eventos em que 'start_time' é nulo, e que ainda não tenha sido alterado.
+         * Seleciona somente 'id'.
+         */
+
+        $eventos_all_day_id = Evento::query()
+            ->where('start_time', null)
+            ->where('all_day', false)
+            ->get()
+            ->pluck('id');
+
+        // Conta o array, se tiver algum ID, atualiza os registros.
+        if (count($eventos_all_day_id) != 0){
+            // Atualiza 'all_day' para 'TRUE'.
+            Evento::whereIn('id', $eventos_all_day_id)->update([
                 'all_day' => true,
             ]);
-        } */
-        //dd($event_all_day);
-        //dd($events);
+        } 
+
         return $events;
     }
 }
