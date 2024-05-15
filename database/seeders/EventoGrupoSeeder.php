@@ -17,7 +17,7 @@ class EventoGrupoSeeder extends Seeder
             // Organismos de coordenação.
             [
                 'nome' => 'CAEP',
-                'notas' => 'Conselho Assuntos Econômicos.'
+                'notas' => 'Conselho Assuntos Econômicos'
             ],
             [
                 'nome' => 'CCP',
@@ -34,79 +34,87 @@ class EventoGrupoSeeder extends Seeder
             //Pastorais e movimentos.
             [
                 'nome' => 'Batismo',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'MESC',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Liturgia',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Setor missionário',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Social',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Mães que oram',
-                'notas' => 'Movimento.'
+                'notas' => 'Movimento'
             ],
             [
                 'nome' => 'Apostolado oração',
-                'notas' => 'Movimento.'
+                'notas' => 'Movimento'
             ],
             [
                 'nome' => 'Terço homens',
-                'notas' => 'Movimento.'
+                'notas' => 'Movimento'
             ],
             [
                 'nome' => 'Acólitos',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Dízimo',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Música',
-                'notas' => 'Ministério.'
+                'notas' => 'Ministério'
             ],
             [
                 'nome' => 'Acolhida',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
-                'nome' => 'Campanha Nova matriz',
-                'notas' => 'Ministério.'
+                'nome' => 'Campanha nova matriz',
+                'notas' => 'Ministério'
             ],
             [
                 'nome' => 'Catequese',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Eventos',
-                'notas' => 'Eventos.'
+                'notas' => 'Eventos'
             ],
             [
                 'nome' => 'Padre/Clero',
-                'notas' => 'Eventos.'
+                'notas' => 'Eventos'
             ],
             [
                 'nome' => 'Secretaria',
-                'notas' => 'Secretaria.'
+                'notas' => 'Atividades c/ secretaria'
             ],
             [
                 'nome' => 'Jovens',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
             ],
             [
                 'nome' => 'Pascom',
-                'notas' => 'Pastoral.'
+                'notas' => 'Pastoral'
+            ],
+            [
+                'nome' => 'Atendimentos',
+                'notas' => 'Confissões e atendimentos'
+            ],
+            [
+                'nome' => 'Diversos',
+                'notas' => 'Atividades diversas'
             ],
         ];
 

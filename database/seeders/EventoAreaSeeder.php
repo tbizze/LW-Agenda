@@ -39,7 +39,7 @@ class EventoAreaSeeder extends Seeder
                 'notas' => 'Abrangência CDP.'
             ],
             [
-                'nome' => 'CDP',
+                'nome' => 'Padre',
                 'notas' => 'Atividade do padre.'
             ],
         ];
