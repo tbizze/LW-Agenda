@@ -1,0 +1,90 @@
+@page {
+    margin: 0.7cm;
+}
+
+
+body {
+    font-family: DejaVu Serif, serif;
+    font-size: 0.8rem;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+.table-div {
+    border: 1px solid #ccc;
+    padding: 20px 40px;
+    /* margin: 0.7cm; */
+}
+
+.has-text-centered {
+    text-align: center !important;
+}
+
+.has-text-left {
+    text-align: left !important;
+}
+
+.has-text-right {
+    text-align: right !important;
+}
+
+.has-text-justify {
+    text-align: justify !important;
+}
+
+.is-size-5 {
+    font-size: 1.25rem !important;
+}
+
+.recibo-p p {
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.p-zero p {
+    margin: 0;
+    padding: 0;
+}
+
+.borda-preco {
+    border: 1px solid #333;
+    padding: 4px 10px;
+    background-color: #e2e2e2;
+}
+
+.borda-assinatura {
+    border-top: 1px solid #999;
+    margin: auto;
+    display: block;
+    width: 35%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.m-t-20 {
+    margin-top: 20px !important;
+}
+.m-t-30 {
+    margin-top: 30px !important;
+}
+
+.m-r-10 {
+    margin-right: 10px !important;
+}
+
+.b {
+    font-weight:bold;
+}
+
+.bg-gray-200 {
+    background-color: #ececec;
+}
+
+.bg-gray-400 {
+    background-color: #c2c2c2;
+}
