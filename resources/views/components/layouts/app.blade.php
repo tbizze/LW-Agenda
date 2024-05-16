@@ -70,8 +70,8 @@
                 <x-mary-menu activate-by-route>
                     <x-mary-menu-item title="Home" icon="o-home" link="/dashboard" />
                     
-                    {{-- <x-mary-menu-item title="Faturas" icon="o-document-text" :link="route('faturas.index')" wire:navigate.hover /> --}}
                     <x-mary-menu-item title="Eventos" icon="o-calendar-days" :link="route('eventos.index')" wire:navigate.hover /> 
+                    <x-mary-menu-item title="Recibos" icon="o-document-text" :link="route('recibos.index')" wire:navigate.hover />
                     {{-- <x-mary-menu-item title="Calendário" icon="o-calendar-days" :link="route('evento.calendar',['mes' => '3','local' => '1','grupo' => '2'])" />  --}}
     
                     <x-mary-menu-sub title="Eventos" icon="m-adjustments-horizontal">
