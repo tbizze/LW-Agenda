@@ -64,4 +64,11 @@ class Recibo extends Model
             get: fn (string $value) => currency_get_db($value),
         );
     }
+    protected function cpf_cnpj_pagad(): Attribute
+    {
+        return Attribute::make(
+            //get: fn (string $value) => currency_get_db($value),
+            set: fn (string $value) => sanitize_number($value),
+        );
+    }
 }
