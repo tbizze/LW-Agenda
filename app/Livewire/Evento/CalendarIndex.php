@@ -102,19 +102,19 @@ class CalendarIndex extends Component
          * Seleciona somente 'id'.
          */
 
-        $eventos_all_day_id = Evento::query()
-            ->where('start_time', null)
-            ->where('all_day', false)
-            ->get()
-            ->pluck('id');
+        // $eventos_all_day_id = Evento::query()
+        //     ->where('start_time', null)
+        //     ->where('all_day', false)
+        //     ->get()
+        //     ->pluck('id');
 
         // Conta o array, se tiver algum ID, atualiza os registros.
-        if (count($eventos_all_day_id) != 0) {
-            // Atualiza 'all_day' para 'TRUE'.
-            Evento::whereIn('id', $eventos_all_day_id)->update([
-                'all_day' => true,
-            ]);
-        }
+        // if (count($eventos_all_day_id) != 0) {
+        //     // Atualiza 'all_day' para 'TRUE'.
+        //     Evento::whereIn('id', $eventos_all_day_id)->update([
+        //         'all_day' => true,
+        //     ]);
+        // }
 
         return $events;
     }
