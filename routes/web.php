@@ -11,6 +11,7 @@ use App\Livewire\Evento\EventoAreaIndex;
 use App\Livewire\Evento\EventoGrupoIndex;
 use App\Livewire\Evento\EventoIndex;
 use App\Livewire\Evento\EventoLocalIndex;
+use App\Livewire\Recibo\ReciboIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -54,7 +55,7 @@ Route::middleware([
     Route::get('/evento/calendar', CalendarIndex::class)->name('evento.calendar');
     Route::get('/evento/pdf', [HomeController::class, 'openEventPdf'])->name('evento.pdf');
     
-    Route::get('/recibos', [HomeController::class, 'openReciboPdf'])->name('recibos.index');
+    Route::get('/recibos', ReciboIndex::class)->name('recibos.index');
     Route::get('/recibos/{recibo}/pdf', [HomeController::class, 'openReciboPdf'])->name('recibos.pdf');
 });
 
