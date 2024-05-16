@@ -42,8 +42,8 @@ class Evento extends Model
      * É passado em um array os nomes das propriedades desejadas.
     */
     protected $appends = [
-        'dia_semana','nome_mes','numero_mes','numero_dia',
-        'start_date_full', 'start_date_full', //'all_day'
+        'mes_nome','mes_numero','dia_numero','dia_nome'
+        //'start_date_full', 'start_date_full', //'all_day' 'dia_semana'
     ];
 
     /* protected function allDay(): Attribute
@@ -78,19 +78,25 @@ class Evento extends Model
             get: fn () => $end_date,  //shortDayName  ou monthName
         );
     }
-    protected function diaSemana(): Attribute
+    protected function diaNumero(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => ucfirst(Carbon::parse($this->start_date)->format('d')),
+        );
+    }
+    protected function diaNome(): Attribute
     {
         return Attribute::make(
             get: fn () => ucfirst(Carbon::parse($this->start_date)->locale('pt')->shortDayName),  //shortDayName  ou dayName
         );
     }
-    protected function nomeMes(): Attribute
+    protected function mesNome(): Attribute
     {
         return Attribute::make(
-            get: fn () => ucfirst(Carbon::parse($this->start_date)->locale('pt')->shortMonthName),  //shortDayName  ou monthName
+            get: fn () => ucfirst(Carbon::parse($this->start_date)->locale('pt')->monthName),  //shortDayName  ou monthName
         );
     }
-    protected function numeroMes(): Attribute
+    protected function mesNumero(): Attribute
     {
         return Attribute::make(
             get: fn () => ucfirst(Carbon::parse($this->start_date)->month),  //shortDayName  ou monthName
