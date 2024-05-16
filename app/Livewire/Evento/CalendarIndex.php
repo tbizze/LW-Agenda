@@ -41,7 +41,7 @@ class CalendarIndex extends Component
                 // Se 'end_time' é passado, define '$end_date' como junção de 'end_date' + 'end_time'
                 if (isset($event->end_time)) {
                     $end_date = $event->end_date->format('Y-m-d') . ' ' . $event->end_time->format('H:i:s');
-                
+
                 // Se 'end_time' é nulo, define '$end_date' como 'end_date' somente.
                 }else{
                     $end_date = $event->end_date->format('Y-m-d');
@@ -61,11 +61,20 @@ class CalendarIndex extends Component
                     case 2:
                         $color_event = '#099c5a'; // paroquial
                         break;
+                    case 3:
+                        $color_event = '#3480eb'; // matriz
+                        break;
+                    case 4:
+                        $color_event = '#f52fb6'; // NSA
+                        break;
+                    case 5:
+                        $color_event = '#eaf36a'; // SST
+                        break;
                     case 6:
                         $color_event = '#eba834'; // CDP
                         break;
                     case 7:
-                        $color_event = '#d93830'; // padre 
+                        $color_event = '#d93830'; // padre
                         break;
                     default:
                         $color_event = '#3480eb'; // paroquial
@@ -86,7 +95,7 @@ class CalendarIndex extends Component
             ];
         }
 
-        
+
         /**
          * Rotina p/ atualizar e corrigir coluna ALL_DAY.
          * Obtêm eventos em que 'start_time' é nulo, e que ainda não tenha sido alterado.
@@ -100,12 +109,12 @@ class CalendarIndex extends Component
             ->pluck('id');
 
         // Conta o array, se tiver algum ID, atualiza os registros.
-        if (count($eventos_all_day_id) != 0){
+        if (count($eventos_all_day_id) != 0) {
             // Atualiza 'all_day' para 'TRUE'.
             Evento::whereIn('id', $eventos_all_day_id)->update([
                 'all_day' => true,
             ]);
-        } 
+        }
 
         return $events;
     }
