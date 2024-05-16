@@ -40,12 +40,25 @@ table tr.items td {
     font-size: 0.7rem;
     border-bottom: 1px solid gray;
 }
+.text-left{
+    text-align: left;
+}
+.text-center{
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
+.border-top{
+    border-top: 1px solid gray;
+}
 .border-none{
     /* border-bottom:none !important; */
     border-bottom: 1px solid gray !important;
     /* color:chocolate; */
 }
-.border{
+
+.border-bottom{
     border-bottom: 1px solid gray;
 }
 .total {
