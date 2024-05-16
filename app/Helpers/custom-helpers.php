@@ -141,6 +141,22 @@ if (! function_exists('capitalize_words')) {
     }
 }
 
+if (! function_exists('sanitize_number')) {
+    /**
+     * Formatar data para BD.
+     *
+     * @param string $date String a formatar
+     *
+     * @return string String formatado
+     */
+    function sanitize_number(string|int $number): string
+    {
+        if ($number) {
+            return Sanitize::cleanNumber($number);
+        }
+    }
+}
+
 
 if (! function_exists('get_meses')) {
     /**

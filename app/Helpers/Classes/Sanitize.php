@@ -55,4 +55,10 @@ final class Sanitize
 
         return ucfirst(str_replace($search, $replace, ucwords(strtolower($string))));
     }
+
+    public static function cleanNumber(string|int $number): string
+    {
+        return preg_replace('/[^0-9]/', '', (string) $number);
+        //return str_pad($number, $length, '0', STR_PAD_LEFT);
+    }
 }
