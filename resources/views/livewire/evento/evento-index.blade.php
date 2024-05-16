@@ -113,13 +113,12 @@
                         placeholder="Selecione..." />
                 </div>
             </div>
-            <div class="flex flex-col">
-            <label for="evento_areas_selected" class="label label-text font-semibold">Áreas</label>
-            <select  wire:model="form.evento_areas_selected" class=" border-primary rounded-lg" multiple>
-                @foreach ($evento_areas as $area)
-                    <option value="{{$area->id}}" class="">{{$area->name}}</option>
-                @endforeach
-            </select>
+            <div class="font-semibold">Áreas</div>
+            <div class="flex flex-wrap gap-2">
+            @foreach ($evento_areas as $area)
+                <x-mary-checkbox :id="'area_' . $area->id" :label="$area->name" wire:model="form.evento_areas_selected"
+                    :value="$area->id" />
+            @endforeach
             </div>
 
             <x-mary-textarea label="Notas" wire:model="form.notas" hint="Max. 100 caracteres" rows="2" />
@@ -163,14 +162,22 @@
                         :config="$date_config" />
                 </div>
             </div> --}}
-            <div class="flex flex-col">
+            <div class="font-semibold">Áreas</div>
+            <div class="flex flex-wrap gap-2">
+                @foreach ($evento_areas as $area)
+                    <x-mary-checkbox :id="'fill_area_' . $area->id" :label="$area->name" wire:model="fil_area_ids"
+                        :value="$area->id" />
+                @endforeach
+            </div>
+
+            {{-- <div class="flex flex-col">
                 <label for="fil_area_ids" class="label label-text font-semibold">Áreas</label>
                 <select  wire:model="fil_area_ids" class=" border-primary rounded-lg" multiple>
                     @foreach ($evento_areas as $area)
                         <option value="{{$area->id}}" class="">{{$area->name}}</option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
             <x-slot:actions>
                 <x-mary-button label="Limpar" @click="$wire.limpaFiltros()" />
                 <x-mary-button label="Filtrar" type="submit" icon="o-check" class="btn-primary" />
