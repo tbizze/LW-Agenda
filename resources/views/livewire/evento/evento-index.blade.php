@@ -5,10 +5,14 @@
             <x-mary-input icon="o-magnifying-glass" placeholder="Search..." wire:model.live="search" />
         </x-slot:middle>
         <x-slot:actions>
+            <x-mary-button wire:click="monthPrevious()" class="relative"><</x-mary-button>                
+            <x-mary-button wire:click="monthNow()" class="relative">Agora</x-mary-button>
+            <x-mary-button wire:click="monthNext()" class="relative">></x-mary-button>
+
             <x-mary-button icon="o-calendar-days" wire:click="openCalendar()" class="relative" />                
+            <x-mary-button id="openPdf" title="PDF" class="relative" >Abrir PDF</x-mary-button>
             {{-- <x-mary-button id="pdf" title="PDF" class="relative" >PDF</x-mary-button>  --}}               
             {{-- <x-mary-button id="pdf" title="PDF" :link="route('evento.pdf','mes='.$fil_mes.'&grupo='.$fil_grupo)" class="relative" >Abrir PDF</x-mary-button>  --}}               
-            <x-mary-button id="openPdf" title="PDF" class="relative" >Abrir PDF</x-mary-button>
             <x-mary-button icon="o-funnel" wire:click="showDrawer = true" class="relative">
                 @if ($qdeFilter > 0)
                     <x-mary-badge :value="$qdeFilter" class="badge-error absolute -right-2 -top-2" />
@@ -35,7 +39,27 @@
             @scope('cell_areas_nome', $evento)
                 <div class=" flex gap-1">
                     @foreach ($evento->areas as $area)
-                        <x-mary-badge :value="$area->nome" class="badge-outline " />
+                        @if ($area->id == 1)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-purple-300" />
+                        @endif
+                        @if ($area->id == 2)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-green-300" />
+                        @endif
+                        @if ($area->id == 3)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-blue-300" />
+                        @endif
+                        @if ($area->id == 4)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-pink-300" />
+                        @endif
+                        @if ($area->id == 5)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-yellow-300" />
+                        @endif
+                        @if ($area->id == 6)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-orange-300" />
+                        @endif
+                        @if ($area->id == 7)
+                            <x-mary-badge :value="$area->nome" class="badge-outline bg-red-300" />
+                        @endif
                     @endforeach
                 </div>
             @endscope

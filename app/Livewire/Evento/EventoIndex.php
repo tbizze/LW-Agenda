@@ -12,6 +12,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class EventoIndex extends Component
@@ -102,13 +103,13 @@ class EventoIndex extends Component
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'bg-base-200 w-1'],
             ['key' => 'start_date', 'label' => 'Data início'],
-            ['key' => 'dia_semana', 'label' => 'Semana'],
-            ['key' => 'start_time', 'label' => 'Hora início'],
+            ['key' => 'dia_nome', 'label' => 'Semana'],
+            ['key' => 'start_time', 'label' => 'Início'],
             ['key' => 'nome', 'label' => 'Nome'],
             ['key' => 'to_grupo_nome', 'label' => 'Grupo'],
             ['key' => 'to_local_nome', 'label' => 'Local'],
             ['key' => 'areas_nome', 'label' => 'Area'],
-            ['key' => 'notas', 'label' => 'Notas', 'sortable' => false],
+            //['key' => 'notas', 'label' => 'Notas', 'sortable' => false],
         ];
     }
 
@@ -266,6 +267,40 @@ class EventoIndex extends Component
             ]
         ];
         return $meses;
+    }
+
+    public function monthNext(){
+        // Se já houver filtrado por mês.
+        if ($this->fil_mes){
+            // Cria uma data, usando o mês da $this->fil_mes. Soma 1 mês. Formata pegando só nº mês.
+            $this->fil_mes = Carbon::createFromDate('2024',$this->fil_mes)->addMonth(1)->month;
+            // Carrega novamente os dados.
+            $this->eventos();
+        // Se variável de mês estiver vazia.
+        }else{
+            $this->fil_mes = Carbon::createFromDate('2024','1')->month;
+            // Carrega novamente os dados.
+            $this->eventos();
+        }
+    }
+    public function monthPrevious(){
+        // Se já houver filtrado por mês.
+        if ($this->fil_mes){
+            // Cria uma data, usando o mês da $this->fil_mes. Subtrai 1 mês. Formata pegando só nº mês.
+            $this->fil_mes = Carbon::createFromDate('2024',$this->fil_mes)->addMonth(-1)->month;
+            // Carrega novamente os dados.
+            $this->eventos();
+        // Se variável de mês estiver vazia.
+        }else{
+            $this->fil_mes = Carbon::createFromDate('2024','1')->month;
+            // Carrega novamente os dados.
+            $this->eventos();
+        }
+    }
+    public function monthNow(){
+        // Cria uma data atual, Formata pegando só nº mês.
+        $this->fil_mes = Carbon::parse()->month;
+        $this->eventos();
     }
 
     public function openCalendar()
