@@ -108,6 +108,7 @@ class EventoIndex extends Component
             ['key' => 'nome', 'label' => 'Nome'],
             ['key' => 'to_grupo_nome', 'label' => 'Grupo'],
             ['key' => 'to_local_nome', 'label' => 'Local'],
+            ['key' => 'all_day', 'label' => 'Inteiro'],
             ['key' => 'areas_nome', 'label' => 'Area'],
             //['key' => 'notas', 'label' => 'Notas', 'sortable' => false],
         ];

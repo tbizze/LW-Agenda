@@ -36,6 +36,11 @@
             @scope('cell_start_time', $evento)
                 {{ isset($evento->start_time) ? $evento->start_time->format('H:i') : ''}}
             @endscope
+            @scope('cell_all_day', $evento)
+                @if ($evento->all_day)
+                    <x-mary-checkbox checked disabled class="checkbox-sm" />
+                @endif
+            @endscope
             @scope('cell_areas_nome', $evento)
                 <div class=" flex gap-1">
                     @foreach ($evento->areas as $area)
