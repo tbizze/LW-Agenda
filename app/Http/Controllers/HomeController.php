@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Evento;
 use App\Models\EventoArea;
+use App\Models\Recibo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -97,6 +98,24 @@ class HomeController extends Controller
         ]);
         // Carrega o PDF na tela.
         return $pdf->stream('eventos.pdf');
+    }
+
+    public function openReciboPdf(Recibo $recibo)
+    {
+        //dd($recibo,$recibo->valor_extenso);
+
+        // Prepara o PDF com os dados passados para a view.
+        $pdf = Pdf::loadView('pdfs.recibo', [
+            'titulo' => 'Recibo de Pagamento',
+            'dados' => $recibo,
+            'segunda_via' => true,
+        ]);
+     
+        // Carrega o PDF na tela.
+        return $pdf->stream('recibo.pdf');
+        // Baixa o PDF.
+        //return $pdf->download('recibo.pdf');
+
     }
     public function pdf()
     {

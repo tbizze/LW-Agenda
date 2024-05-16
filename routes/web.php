@@ -53,6 +53,9 @@ Route::middleware([
     Route::get('/eventos', EventoIndex::class)->name('eventos.index');
     Route::get('/evento/calendar', CalendarIndex::class)->name('evento.calendar');
     Route::get('/evento/pdf', [HomeController::class, 'openEventPdf'])->name('evento.pdf');
+    
+    Route::get('/recibos', [HomeController::class, 'openReciboPdf'])->name('recibos.index');
+    Route::get('/recibos/{recibo}/pdf', [HomeController::class, 'openReciboPdf'])->name('recibos.pdf');
 });
 
 
