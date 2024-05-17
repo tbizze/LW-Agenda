@@ -29,7 +29,7 @@ class EventoForm extends Form
     public $end_date;
     public $start_time;
     public $end_time;
-    public $all_day;
+    public $all_day = false;
     public $evento_grupo_id ='';
     public $evento_local_id;
     public $evento_areas_selected = [];
