@@ -2,19 +2,123 @@
 
 namespace App\Livewire\Evento;
 
+use App\Livewire\Forms\Evento\EventoForm;
 use App\Models\Evento;
+use App\Models\EventoArea;
+use App\Models\EventoGrupo;
+use App\Models\EventoLocal;
+//use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Mary\Traits\Toast;
+use Ramsey\Uuid\Type\Integer;
 
 class CalendarIndex extends Component
 {
+    use Toast;
+    //public $events;
+
+    public bool $modalRegistro = false;
+    public int $registroEditMode = 1;
+    public $date_config = [
+        'altFormat' => 'd/m/Y',
+        'locale' => 'pt',
+    ];
+    public EventoForm $form;
+
     /* Renderiza componente */
     #[Title('Calendário eventos')]
     public function render()
     {
         return view('livewire.evento.calendar-index', [
             'events' => $this->eventos(),
+            'evento_locals' => EventoLocal::orderBy('nome')->get(['id', 'nome as name']),
+            'evento_grupos' => EventoGrupo::orderBy('nome')->get(['id', 'nome as name']),
+            'evento_areas' => EventoArea::get(['id', 'nome as name']),
         ]);
+    }
+
+    public function newEvent($startDate, $endDate)
+    {
+        $validated = [
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ];
+        //dd($validated);
+        $id = 1541;
+        return $id;
+    }
+
+    public function eventEdit2($event)
+    {
+        //dd($event);
+        $this->modalRegistro = true;
+    }
+
+    // Método p/ carregar inputs do form.
+    public function eventEdit($id)
+    {
+        $registro = Evento::find($id);
+        $this->form->setRegistro($registro);
+        $this->registroEditMode = 2;
+        $this->modalRegistro = true;
+    }
+    public function save()
+    {
+        //dd('xx', $this->registroEditMode);
+        //editMode: 1=createEvent, 2=allUpdate, 3=dropUpdate,
+        if ($this->registroEditMode == 2) {
+            //dd('allUpdate');
+            $this->form->update();
+            $this->registroEditMode = 1;
+            $this->success('Registro salvo com sucesso!');
+            //$this->eventos();
+            $this->dispatch('post-created');
+        } elseif ($this->registroEditMode == 3) {
+            // dd('dropUpdate');
+            // $this->form->dropUpdate();
+            // $this->registroEditMode = 1;
+            // $this->success('Registro salvo com sucesso!');
+        } else {
+            // $this->form->store();
+            // $this->success('Registro incluído com sucesso!');
+        }
+        $this->modalRegistro = false;
+    }
+
+    public function eventDrop($event, $oldEvent)
+    {
+        //dump($oldEvent['start'], $event['start']);
+
+        // Busca o evento no BD.
+        $evento = Evento::findOrFail($event['id']);
+
+        // Persiste no BD a alteração no evento escolhido.
+        $evento->update([
+            'start_date' => $event['start'],
+            //'end_date' => $this->end_date,
+        ]);
+        // Emite aviso.
+        $this->success('Registro salvo com sucesso!');
+
+        // Verifica se o evento é do usuário logado.
+        // if ($dh_event->user_id != auth()->id() || $dh_event->created_by != auth()->id()) {
+        //     abort(403);
+        // }
+
+        // $validated = Validator::make(
+        //     [
+        //         'start_date' => $event['start'],
+        //     ],
+        //     [
+        //         'start_date' => 'required|date',
+        //     ]
+        // ); 
+        // Métodos que podem ser chamados: ->validate() ->fails());
+
+        // $this->clearCache();
+        // $this->emit('refreshCalendar');
     }
     public function eventos()
     {
@@ -116,6 +220,7 @@ class CalendarIndex extends Component
         //     ]);
         // }
 
+        //dd($events);
         return $events;
     }
 }
