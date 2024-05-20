@@ -30,7 +30,7 @@ class EventoForm extends Form
     public $start_time;
     public $end_time;
     public $all_day = false;
-    public $evento_grupo_id ='';
+    public $evento_grupo_id = '';
     public $evento_local_id;
     public $evento_areas_selected = [];
 
@@ -57,13 +57,13 @@ class EventoForm extends Form
     // Método p/ persistir no BD.
     public function store()
     {
-        if($this->end_date){
+        if ($this->end_date) {
             $var_end_date = $this->end_date;
-        }else{
+        } else {
             $var_end_date = null;
         }
 
-        DB::transaction(function () use ($var_end_date)  {
+        DB::transaction(function () use ($var_end_date) {
             // Carrega no model atual os dados aprovados nas validações, para persistir no DB.
             $this->validate();
             // Persiste o model atualizado no DB.
@@ -79,7 +79,7 @@ class EventoForm extends Form
                 'evento_local_id' => $this->evento_local_id,
                 'notas' => $this->notas,
             ]);
-            
+
             // Salva as áreas na tabela Pivô
             if ($this->evento_areas_selected) {
                 $evento->areas()->sync($this->evento_areas_selected);
@@ -93,13 +93,13 @@ class EventoForm extends Form
     {
         //dd($this->all());
 
-        if($this->end_date){
+        if ($this->end_date) {
             $var_end_date = $this->end_date;
-        }else{
+        } else {
             $var_end_date = null;
         }
 
-        DB::transaction(function () use ($var_end_date)  {
+        DB::transaction(function () use ($var_end_date) {
             // Carrega no model atual os dados aprovados nas validações, para persistir no DB.
             $this->validate();
             // Persiste o model atualizado no DB.
@@ -122,5 +122,8 @@ class EventoForm extends Form
             }
         });
         $this->reset();
+    }
+    public function dropUpdate()
+    {
     }
 }

@@ -5,14 +5,21 @@
             <x-mary-input icon="o-magnifying-glass" placeholder="Search..." wire:model.live="search" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-mary-button wire:click="monthPrevious()" class="relative"><</x-mary-button>                
-            <x-mary-button wire:click="monthNow()" class="relative">Agora</x-mary-button>
-            <x-mary-button wire:click="monthNext()" class="relative">></x-mary-button>
+            <x-mary-button wire:click="monthPrevious()" class="relative">
+                <x-mary-icon name="c-arrow-left" class="w-6 h-6" />
+            </x-mary-button>
+            <x-mary-button wire:click="monthNow()" class="relative"><span
+                    class=" uppercase font-bold">Agora</span></x-mary-button>
+            <x-mary-button wire:click="monthNext()" class="relative">
+                <x-mary-icon name="c-arrow-right" class="w-6 h-6" />
+            </x-mary-button>
 
-            <x-mary-button icon="o-calendar-days" wire:click="openCalendar()" class="relative" />                
-            <x-mary-button id="openPdf" title="PDF" class="relative" >Abrir PDF</x-mary-button>
-            {{-- <x-mary-button id="pdf" title="PDF" class="relative" >PDF</x-mary-button>  --}}               
-            {{-- <x-mary-button id="pdf" title="PDF" :link="route('evento.pdf','mes='.$fil_mes.'&grupo='.$fil_grupo)" class="relative" >Abrir PDF</x-mary-button>  --}}               
+            <x-mary-button icon="o-calendar-days" wire:click="openCalendar()" class="relative" />
+            <x-mary-button id="openReportPdf" title="PDF" class="relative">
+                <x-mary-icon name="o-document-arrow-down" class="w-6 h-6" />
+            </x-mary-button>
+            {{-- <x-mary-button id="pdf" title="PDF" class="relative" >PDF</x-mary-button>  --}}
+            {{-- <x-mary-button id="pdf" title="PDF" :link="route('evento.pdf','mes='.$fil_mes.'&grupo='.$fil_grupo)" class="relative" >Abrir PDF</x-mary-button>  --}}
             <x-mary-button icon="o-funnel" wire:click="showDrawer = true" class="relative">
                 @if ($qdeFilter > 0)
                     <x-mary-badge :value="$qdeFilter" class="badge-error absolute -right-2 -top-2" />
@@ -34,7 +41,7 @@
                 {{ isset($evento->start_date) ? $evento->start_date->format('d/m/Y') : '' }}
             @endscope
             @scope('cell_start_time', $evento)
-                {{ isset($evento->start_time) ? $evento->start_time->format('H:i') : ''}}
+                {{ isset($evento->start_time) ? $evento->start_time->format('H:i') : '' }}
             @endscope
             @scope('cell_all_day', $evento)
                 @if ($evento->all_day)
@@ -102,7 +109,7 @@
             </div>
             <div class="flex justify-between gap-2">
                 <div class="w-1/2">
-                    <x-mary-datetime label="Data fim" wire:model="form.end_date" />
+                    <x-mary-datepicker label="Data fim" wire:model="form.end_date" :config="$date_config" />
                 </div>
                 <div class="w-1/2">
                     <x-mary-datetime label="Hora fim" wire:model="form.end_time" type="time" />
@@ -120,10 +127,10 @@
             </div>
             <div class="font-semibold">Áreas</div>
             <div class="flex flex-wrap gap-2">
-            @foreach ($evento_areas as $area)
-                <x-mary-checkbox :id="'area_' . $area->id" :label="$area->name" wire:model="form.evento_areas_selected"
-                    :value="$area->id" />
-            @endforeach
+                @foreach ($evento_areas as $area)
+                    <x-mary-checkbox :id="'area_' . $area->id" :label="$area->name" wire:model="form.evento_areas_selected"
+                        :value="$area->id" />
+                @endforeach
             </div>
 
             <x-mary-textarea label="Notas" wire:model="form.notas" hint="Max. 100 caracteres" rows="2" />
@@ -142,17 +149,16 @@
                 [{{ $registro_id }}]</span>?</div>
         <x-slot:actions>
             <x-mary-button label="Cancel" @click="$wire.modalConfirmDelete = false" />
-            <x-mary-button label="Excluir" wire:click="delete({{ $registro_id }})" class="btn-error" spinner="save" />
+            <x-mary-button label="Excluir" wire:click="delete({{ $registro_id }})" class="btn-error"
+                spinner="save" />
         </x-slot:actions>
     </x-mary-modal>
 
     {{-- Drawer Right -> FILTRAR --}}
     <x-mary-drawer title="Filtros" wire:model="showDrawer" with-close-button right class=" w-1/3 lg:w-2/6">
         <x-mary-form wire:submit="filtrar">
-            <x-mary-input label="Hist./Notas" placeholder="Digite uma pesquisa..."
-                wire:model="search" />
-            <x-mary-select label="Grupo" :options="$evento_grupos" wire:model="fil_grupo"
-                placeholder="Selecione..." />
+            <x-mary-input label="Hist./Notas" placeholder="Digite uma pesquisa..." wire:model="search" />
+            <x-mary-select label="Grupo" :options="$evento_grupos" wire:model="fil_grupo" placeholder="Selecione..." />
             <x-mary-select label="Local" :options="$evento_locals" wire:model="fil_local" placeholder="Selecione..." />
             <x-mary-select label="Mês" :options="$meses" wire:model="fil_mes" placeholder="Selecione..." />
             {{-- public array $users_multi_ids = []; --}}
@@ -190,22 +196,33 @@
         </x-mary-form>
     </x-mary-drawer>
 
+    @push('styles')
+        {{-- Flatpickr  --}}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    @endpush
+    @push('scripts')
+        {{-- Flatpickr  --}}
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+    @endpush
+
+
     @script
-    <script>
-        document.getElementById('openPdf').addEventListener('click', function(){
+        <script>
+            document.getElementById('openReportPdf').addEventListener('click', function() {
 
-            const var_link = "evento/pdf?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local + "&area_ids=" + $wire.fil_area_ids;
-            console.log(var_link);
-            window.open(var_link, '_blank');
-        })
-        /* document.getElementById('pdf').addEventListener('click', function(){
-            //console.log('TEST');
-            const var_link = "evento/calendar?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local + "&area=" + $wire.fil_area;
-            //console.log(var_link);
-            window.open(var_link, '_blank');
-            //$this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes,'local' => $this->fil_local,'grupo' => $this->fil_grupo]);
-        }) */
-
-    </script>
+                const var_link = "evento/pdf?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" +
+                    $wire.fil_local + "&area_ids=" + $wire.fil_area_ids;
+                console.log(var_link);
+                window.open(var_link, '_blank');
+            })
+            /* document.getElementById('pdf').addEventListener('click', function(){
+                //console.log('TEST');
+                const var_link = "evento/calendar?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" + $wire.fil_local + "&area=" + $wire.fil_area;
+                //console.log(var_link);
+                window.open(var_link, '_blank');
+                //$this->redirectRoute('evento.calendar', ['mes' => $this->fil_mes,'local' => $this->fil_local,'grupo' => $this->fil_grupo]);
+            }) */
+        </script>
     @endscript
 </div>
