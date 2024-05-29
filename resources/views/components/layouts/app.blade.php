@@ -9,6 +9,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+    {{-- @vite(['resources/js/app.js']) --}}
 
     {{-- Onde receberá arquivos css dos componentes Blade. --}}
     @stack('styles')
@@ -120,6 +122,7 @@
     <x-mary-toast />
 
     {{-- Onde receberá arquivos ou scripts JS dos componentes Blade. --}}
+    @livewireScriptConfig
     @stack('scripts')
 </body>
 
