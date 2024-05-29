@@ -14,7 +14,8 @@
 
     {{-- Renderiza tabela --}}
     <x-mary-card shadow class=" bg-white">
-        <x-mary-table :headers="$headers" :rows="$recibos" striped @row-click="$wire.edit($event.detail.id)"
+        {{-- <x-mary-table :headers="$headers" :rows="$recibos" striped @row-click="$wire.edit($event.detail.id)" --}}
+        <x-mary-table :headers="$headers" :rows="$recibos" striped @row-click="$wire.showModalRegistro($event.detail.id)"
             with-pagination :sort-by="$sortBy">
             {{-- Personaliza / formata células  --}}
             @scope('cell_data', $recibo)
@@ -22,6 +23,10 @@
             @endscope
             @scope('actions', $recibo)
                 <div class="flex gap-1">
+                    @can('recibos.edit')
+                        <x-mary-button icon="o-document-duplicate" wire:click="copyRecord({{ $recibo->id }})" spinner
+                            class="btn-sm btn-outline border-none p-1" />
+                    @endcan
                     @can('recibos.delete')
                         <x-mary-button icon="o-trash" wire:click="confirmDelete({{ $recibo->id }})" spinner
                             class="btn-sm btn-outline border-none text-error p-1" />
@@ -33,37 +38,39 @@
 
     {{-- MODAL: Criar/Editar --}}
     <x-mary-modal wire:model="modalRegistro" title="Criar/Editar registro" class="backdrop-blur">
-        <x-mary-form wire:submit="save">
+        <x-mary-form wire:submit="submitForm">
             <div class="flex justify-between gap-2">
                 <div class="w-1/2">
-                    <x-mary-input label="Valor" wire:model="form.valor" />
+                    <x-mary-input label="Valor" wire:model="valor" money locale="pt-BR" />
                 </div>
                 <div class="w-1/2">
-                    <x-mary-datepicker label="Data" wire:model="form.data" :config="$date_config" />
-                </div>
-            </div>
-            
-            <x-mary-input label="Histórico" wire:model="form.historico" />
-
-            <div class="flex justify-between gap-2">
-                <div class="w-1/2">
-                    <x-mary-input label="Recebedor" wire:model="form.recebedor" />
-                </div>
-                <div class="w-1/2">
-                    <x-mary-input label="CPF/CNPJ" wire:model="form.cpf_cnpj_receb" />
+                    <x-mary-datepicker label="Data" wire:model="data" :config="$date_config" />
                 </div>
             </div>
 
+            <x-mary-input label="Histórico" wire:model="historico" />
+
             <div class="flex justify-between gap-2">
                 <div class="w-1/2">
-                    <x-mary-input label="Pagador" wire:model="form.pagador" />
+                    <x-mary-input label="Recebedor" wire:model="recebedor" />
                 </div>
                 <div class="w-1/2">
-                    <x-mary-input label="CPF/CNPJ" wire:model="form.cpf_cnpj_pagad" />
+                    <x-mary-input label="CPF/CNPJ" wire:model="cpf_cnpj_receb"
+                        x-mask:dynamic="$input.length > 14 ? '99.999.999/9999-99' : '999.999.999-99'" />
                 </div>
             </div>
 
-            <x-mary-input label="Local" wire:model="form.local" />
+            <div class="flex justify-between gap-2">
+                <div class="w-1/2">
+                    <x-mary-input label="Pagador" wire:model="pagador" />
+                </div>
+                <div class="w-1/2">
+                    <x-mary-input label="CPF/CNPJ" wire:model="cpf_cnpj_pagad"
+                        x-mask:dynamic="$input.length > 14 ? '99.999.999/9999-99' : '999.999.999-99'" />
+                </div>
+            </div>
+
+            <x-mary-input label="Local" wire:model="local" />
 
             {{-- //'valor','historico','data','local','pagador','cpf_cnpj_pagad','recebedor','cpf_cnpj_receb', --}}
             <x-slot:actions>
@@ -84,4 +91,19 @@
             <x-mary-button label="Excluir" wire:click="delete({{ $registro_id }})" class="btn-error" spinner="save" />
         </x-slot:actions>
     </x-mary-modal>
+
+    @push('styles')
+        {{-- Flatpickr  --}}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    @endpush
+    @push('scripts')
+        {{-- Flatpickr  --}}
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+        {{--  Currency  --}}
+        <script src="https://cdn.jsdelivr.net/gh/robsontenorio/mary@0.44.2/libs/currency/currency.js"></script>
+        <script>
+            flatpickr.localize(flatpickr.l10ns.pt);
+        </script>
+    @endpush
 </div>
