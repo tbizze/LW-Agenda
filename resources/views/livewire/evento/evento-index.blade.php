@@ -209,6 +209,9 @@
 
     @script
         <script>
+            flatpickr.localize(flatpickr.l10ns.pt);
+        </script>
+        <script>
             document.getElementById('openReportPdf').addEventListener('click', function() {
 
                 const var_link = "evento/pdf?" + "mes=" + $wire.fil_mes + "&grupo=" + $wire.fil_grupo + "&local=" +
