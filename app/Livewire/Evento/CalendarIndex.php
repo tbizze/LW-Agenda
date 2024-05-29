@@ -17,15 +17,40 @@ use Ramsey\Uuid\Type\Integer;
 class CalendarIndex extends Component
 {
     use Toast;
-    //public $events;
 
+    // Modelo.
+    public ?Evento $evento = null;
+
+    // Propriedades (campos) do modelo.
+    public $nome = '';
+    public $notas = '';
+    public $start_date = '';
+    public $end_date = '';
+    public $start_time = '';
+    public $end_time = '';
+    public $all_day = false;
+    public $evento_grupo_id = '';
+    public $evento_local_id = '';
+    public array $evento_areas_selected = [];
+
+    // Regras de validação.
+    #[Validate([
+        'nome' => ['required', 'string', 'min:3', 'max:50'],
+        'notas' => ['nullable', 'string', 'max:100'],
+        'start_date' => ['required', 'date'],
+        'end_date' => ['nullable', 'date'],
+        'start_time' => ['nullable', 'date_format:H:i'],
+        'end_time' => ['nullable', 'date_format:H:i'],
+        'evento_grupo_id' => ['required', 'numeric'],
+    ])]
+
+    // Atributos diversos.
     public bool $modalRegistro = false;
     public int $registroEditMode = 1;
     public $date_config = [
         'altFormat' => 'd/m/Y',
         'locale' => 'pt',
     ];
-    public EventoForm $form;
 
     /* Renderiza componente */
     #[Title('Calendário eventos')]
@@ -41,11 +66,18 @@ class CalendarIndex extends Component
 
     public function newEvent($startDate, $endDate)
     {
-        $validated = [
-            'start_date' => $startDate,
+        $this->start_date = $startDate;
+        $this->end_date = $endDate;
+        $this->modalRegistro = true;
+
+        //dd($startDate, $endDate);
+        /* $validated = [
+            'start_date' => '$startDate',
             'end_date' => $endDate,
-        ];
+        ]; */
         //dd($validated);
+        //$this->$start_date = 1;
+        //$this->form->store();
         $id = 1541;
         return $id;
     }

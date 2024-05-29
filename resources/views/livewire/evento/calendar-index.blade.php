@@ -104,17 +104,25 @@
 
                     // Método ao selecionar uma data ou período, do calendário.
                     select: function(data) {
-                        // @this.newEvent(data.start.toISOString(), data.end.toISOString())
-                        //     .then(
-                        //         function(id) {
-                        //             calendar.addEvent({
-                        //                 id: id,
-                        //                 title: 'event_name',
-                        //                 start: data.startStr,
-                        //                 end: data.endStr,
-                        //             });
-                        //             calendar.unselect();
-                        //         });
+
+                        //@this.newEvent(data.start.toISOString(), data.end.toISOString())
+                        //$wire.start_date = data.startStr;
+                        //$wire.set('start_date', data.startStr);
+                        //console.log($wire.start_date);
+
+                        //console.log(data.startStr, data.endStr);
+                        @this.newEvent(data.startStr, data.endStr)
+                            .then(
+                                function(event) {
+                                    console.log(event);
+                                    //         calendar.addEvent({
+                                    //             id: id,
+                                    //             title: 'event_name',
+                                    //             start: data.startStr,
+                                    //             end: data.endStr,
+                                    //         });
+                                    //         calendar.unselect();
+                                });
                     },
                 });
                 calendar.render();
