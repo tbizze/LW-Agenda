@@ -28,7 +28,15 @@ class DatabaseSeeder extends Seeder
             //EventoAreaSeeder::class,
             //EventoGrupoSeeder::class,
             //EventoLocalSeeder::class,
-            EventoSeeder::class,
+            //EventoSeeder::class,
+
+            // PgtoTipoSeeder::class,
+            // FaturaStatusSeeder::class,
+
+            // Módulo fatura.
+            // FaturaGrupoSeeder::class,
+            // FaturaEmissoraSeeder::class,
+            FaturaSeeder::class,
 
         ]);
     }
