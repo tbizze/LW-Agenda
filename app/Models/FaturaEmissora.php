@@ -24,6 +24,13 @@ class FaturaEmissora extends Model
     ];
 
     /**
+     * Configura o formato da data p/ as colunas 'dt_lcto'.
+     */
+    protected $casts = [
+        'ativo' => 'boolean',
+    ];
+
+    /**
      * RELACIONAMENTO: A Emissora 'tem muitas' (hasMany) Faturas. 
      * Obtenha essa coleção de registros.
      */
