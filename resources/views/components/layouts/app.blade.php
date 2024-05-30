@@ -94,13 +94,15 @@
                         wire:navigate.hover />
                 </x-mary-menu-sub>
 
-                {{-- <x-mary-menu-sub title="Recursos" icon="m-adjustments-horizontal">
-                        <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura.grupos.index')" wire:navigate.hover />
-                        <x-mary-menu-item title="Fatura emissores" icon="m-arrow-small-right" :link="route('fatura.emissoras.index')" wire:navigate.hover />
-                        <x-mary-menu-item title="Movimento grupos" icon="m-arrow-small-right" :link="route('movimento.grupos.index')" wire:navigate.hover />
+                <x-mary-menu-sub title="Finança" icon="m-adjustments-horizontal">
+                    <x-mary-menu-item title="Fatura emissores" icon="m-arrow-small-right" :link="route('fatura-emissoras.index')"
+                        wire:navigate />
+                    <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura-grupos.index')"
+                        wire:navigate />
+                    {{-- <x-mary-menu-item title="Movimento grupos" icon="m-arrow-small-right" :link="route('movimento.grupos.index')" wire:navigate.hover />
                         <x-mary-menu-item title="Tipos pgtos" icon="m-arrow-small-right" :link="route('admin.pgto_tipos.index')" wire:navigate.hover />
-                        <x-mary-menu-item title="Status" icon="m-arrow-small-right" :link="route('admin.status.index')" wire:navigate.hover />
-                    </x-mary-menu-sub> --}}
+                        <x-mary-menu-item title="Status" icon="m-arrow-small-right" :link="route('admin.status.index')" wire:navigate.hover /> --}}
+                </x-mary-menu-sub>
 
                 <x-mary-menu-sub title="Configurações" icon="o-cog-6-tooth">
                     <x-mary-menu-item title="Funções" icon="m-arrow-small-right" :link="route('admin.roles.index')" wire:navigate />
