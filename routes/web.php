@@ -11,6 +11,8 @@ use App\Livewire\Evento\EventoAreaIndex;
 use App\Livewire\Evento\EventoGrupoIndex;
 use App\Livewire\Evento\EventoIndex;
 use App\Livewire\Evento\EventoLocalIndex;
+use App\Livewire\Finance\FaturaEmissoraIndex;
+use App\Livewire\Finance\FaturaGrupoIndex;
 use App\Livewire\Recibo\ReciboIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +43,7 @@ Route::middleware([
     Route::get('/dashboard', DashboardIndex::class)->name('dashboard');
 
     // Rotas p/ administrator permissões.
-    Route::group(['middleware' => ['role:Admin']], function () { 
+    Route::group(['middleware' => ['role:Admin']], function () {
         Route::get('/admin/roles', RoleIndex::class)->name('admin.roles.index');
         Route::get('/admin/permissions', PermissionIndex::class)->name('admin.permissions.index');
         Route::get('/admin/user-has-roles', UserHasRolesIndex::class)->name('admin.user-has-roles.index');
@@ -54,14 +56,17 @@ Route::middleware([
     Route::get('/eventos', EventoIndex::class)->name('eventos.index');
     Route::get('/evento/calendar', CalendarIndex::class)->name('evento.calendar');
     Route::get('/evento/pdf', [HomeController::class, 'openEventPdf'])->name('evento.pdf');
-    
+
     Route::get('/recibos', ReciboIndex::class)->name('recibos.index');
     Route::get('/recibos/{recibo}/pdf', [HomeController::class, 'openReciboPdf'])->name('recibos.pdf');
+
+    Route::get('/financa/fatura-emissoras', FaturaEmissoraIndex::class)->name('fatura-emissoras.index');
+    Route::get('/financa/fatura-grupos', FaturaGrupoIndex::class)->name('fatura-grupos.index');
 });
 
 
 Route::get('/pdf1', [HomeController::class, 'pdf'])->name('pdf.test');
-Route::get('/pdf2', function(){
+Route::get('/pdf2', function () {
     $data = [
         [
             'quantity' => 1,
@@ -69,5 +74,5 @@ Route::get('/pdf2', function(){
             'price' => '129.00'
         ]
     ];
-    return view('pdfs.exemplo',['data' => $data]);
+    return view('pdfs.exemplo', ['data' => $data]);
 });
