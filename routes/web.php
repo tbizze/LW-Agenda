@@ -63,7 +63,7 @@ Route::middleware([
 
     Route::get('/financa/fatura-emissoras', FaturaEmissoraIndex::class)->name('fatura-emissoras.index');
     Route::get('/financa/fatura-grupos', FaturaGrupoIndex::class)->name('fatura-grupos.index');
-    Route::get('/financa/faturas', FaturaIndex::class)->name('fatura.index');
+    Route::get('/financa/faturas', FaturaIndex::class)->name('faturas.index');
 });
 
 

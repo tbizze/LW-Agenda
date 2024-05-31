@@ -94,7 +94,8 @@
                         wire:navigate.hover />
                 </x-mary-menu-sub>
 
-                <x-mary-menu-sub title="Finança" icon="m-adjustments-horizontal">
+                <x-mary-menu-sub title="Finança" icon="s-scale">
+                    <x-mary-menu-item title="Faturas" icon="m-arrow-small-right" :link="route('faturas.index')" wire:navigate />
                     <x-mary-menu-item title="Fatura emissores" icon="m-arrow-small-right" :link="route('fatura-emissoras.index')"
                         wire:navigate />
                     <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura-grupos.index')"
