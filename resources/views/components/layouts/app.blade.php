@@ -98,8 +98,8 @@
                     <x-mary-menu-item title="Faturas" icon="m-arrow-small-right" :link="route('faturas.index')" wire:navigate />
                     <x-mary-menu-item title="Fatura emissores" icon="m-arrow-small-right" :link="route('fatura-emissoras.index')"
                         wire:navigate />
-                    <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura-grupos.index')"
-                        wire:navigate />
+                    {{-- <x-mary-menu-item title="Fatura grupos" icon="m-arrow-small-right" :link="route('fatura-grupos.index')"
+                        wire:navigate /> --}}
                     {{-- <x-mary-menu-item title="Movimento grupos" icon="m-arrow-small-right" :link="route('movimento.grupos.index')" wire:navigate.hover />
                         <x-mary-menu-item title="Tipos pgtos" icon="m-arrow-small-right" :link="route('admin.pgto_tipos.index')" wire:navigate.hover />
                         <x-mary-menu-item title="Status" icon="m-arrow-small-right" :link="route('admin.status.index')" wire:navigate.hover /> --}}

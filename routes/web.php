@@ -62,7 +62,7 @@ Route::middleware([
     Route::get('/recibos/{recibo}/pdf', [HomeController::class, 'openReciboPdf'])->name('recibos.pdf');
 
     Route::get('/financa/fatura-emissoras', FaturaEmissoraIndex::class)->name('fatura-emissoras.index');
-    Route::get('/financa/fatura-grupos', FaturaGrupoIndex::class)->name('fatura-grupos.index');
+    //Route::get('/financa/fatura-grupos', FaturaGrupoIndex::class)->name('fatura-grupos.index');
     Route::get('/financa/faturas', FaturaIndex::class)->name('faturas.index');
 });
 
