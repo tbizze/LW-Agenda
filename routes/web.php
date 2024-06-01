@@ -11,6 +11,7 @@ use App\Livewire\Evento\EventoAreaIndex;
 use App\Livewire\Evento\EventoGrupoIndex;
 use App\Livewire\Evento\EventoIndex;
 use App\Livewire\Evento\EventoLocalIndex;
+use App\Livewire\Finance\FaturaCreate;
 use App\Livewire\Finance\FaturaEmissoraIndex;
 use App\Livewire\Finance\FaturaGrupoIndex;
 use App\Livewire\Finance\FaturaIndex;
@@ -64,6 +65,7 @@ Route::middleware([
     Route::get('/financa/fatura-emissoras', FaturaEmissoraIndex::class)->name('fatura-emissoras.index');
     //Route::get('/financa/fatura-grupos', FaturaGrupoIndex::class)->name('fatura-grupos.index');
     Route::get('/financa/faturas', FaturaIndex::class)->name('faturas.index');
+    Route::get('/financa/faturas/create', FaturaCreate::class)->name('faturas.create.index');
 });
 
 
