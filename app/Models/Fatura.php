@@ -22,7 +22,7 @@ class Fatura extends Model
      * Lista de campos com persistência no BD. 
      */
     protected $fillable = [
-        'dt_venc', 'dt_pgto', 'valor_fatura', 'valor_pgto', 'codigo', 'notas', 'fatura_emissora_id', 'pgto_tipo_id', 'status_id'
+        'dt_venc', 'dt_pgto', 'valor_fatura', 'valor_pgto', 'codigo', 'notas', 'fatura_emissora_id', 'pgto_tipo_id', 'fatura_status_id'
     ];
 
     /**
